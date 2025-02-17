@@ -124,3 +124,12 @@ img{
     text-align:center;
     box-shadow: 2px 2px 3px #999;  
 }
+
+p a {
+    text-decoration: none !important;
+    color: rgb(97, 64, 128); /* Adjust to match your theme */
+}
+
+p a:hover {
+    text-decoration: underline;
+}
