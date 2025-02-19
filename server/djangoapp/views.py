@@ -1,4 +1,4 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
 import logging
@@ -11,8 +11,6 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
-
-# Create your views here.
 
 # Create a `login_request` view to handle sign in request
 @csrf_exempt
@@ -39,8 +37,6 @@ def logout_request(request):
 # Create a `registration` view to handle sign up request
 @csrf_exempt
 def registration(request):
-    context = {}
-
     data = json.loads(request.body)
     username = data['userName']
     password = data['password']
@@ -80,7 +76,6 @@ def get_cars(request):
     return JsonResponse({"CarModels": cars})
 
 
-# Update the `get_dealerships` view to render the index page with a list of dealerships
 @csrf_exempt
 def get_dealerships(request, state="All"):
     endpoint = "/fetchDealers" if state == "All" else f"/fetchDealers/{state}"
@@ -88,7 +83,6 @@ def get_dealerships(request, state="All"):
     return JsonResponse({"status": 200, "dealers": dealerships})
 
 
-# Create a `get_dealer_reviews` view to render the reviews of a dealer
 @csrf_exempt
 def get_dealer_reviews(request, dealer_id):
     if dealer_id:
@@ -102,7 +96,6 @@ def get_dealer_reviews(request, dealer_id):
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
 
-# Create a `get_dealer_details` view to render the dealer details
 @csrf_exempt
 def get_dealer_details(request, dealer_id):
     if dealer_id:
@@ -113,7 +106,6 @@ def get_dealer_details(request, dealer_id):
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
 
-# Create a `add_review` view to submit a review
 @csrf_exempt
 def add_review(request):
     if not request.user.is_anonymous:
@@ -121,7 +113,8 @@ def add_review(request):
         try:
             response = post_review(data)
             return JsonResponse({"status": 200})
-        except Exception:
+        except Exception as e:
+            logger.error(f"Error in posting review: {e}")
             return JsonResponse({"status": 401, "message": "Error in posting review"})
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
