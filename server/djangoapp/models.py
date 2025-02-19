@@ -3,6 +3,7 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 # Create your models here.
 
+
 class CarMake(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
@@ -12,7 +13,7 @@ class CarMake(models.Model):
 
 
 class CarModel(models.Model):
-    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)  # Many-to-One relationship
+    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     CAR_TYPES = [
         ('SEDAN', 'Sedan'),
@@ -29,4 +30,4 @@ class CarModel(models.Model):
     )
 
     def __str__(self):
-        return f"{self.car_make.name} {self.name}"  # Return the car make and model as the string representation
+        return f"{self.car_make.name} {self.name}"
