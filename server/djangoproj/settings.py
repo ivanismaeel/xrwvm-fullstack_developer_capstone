@@ -20,22 +20,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = (
-    'django-insecure-ccow$tz_=9%dxu4(0%^(z%nx32#s@(zt9$ih@)5l54yny)wm-0'
-)
+SECRET_KEY = 'django-insecure-ccow$tz_=9%dxu4(0%^(z%nx32#s@(zt9$ih@)5l54yny)wm-0'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
 ALLOWED_HOSTS = [
     'localhost',
-    (
-        'https://ivanismaeel-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01'
-        '.proxy.cognitiveclass.ai'
-    ),
+    'https://ivanismaeel-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
 ]
 CSRF_TRUSTED_ORIGINS = [
-    (
-        'https://ivanismaeel-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01'
-        '.proxy.cognitiveclass.ai'
-    ),
+    'https://ivanismaeel-8000.theiadockernext-0-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai'
 ]
 
 REST_FRAMEWORK = {
@@ -72,17 +67,15 @@ TEMPLATES = [
         'DIRS': [
             os.path.join(BASE_DIR, 'frontend/static'),
             os.path.join(BASE_DIR, 'frontend/build'),
-            os.path.join(
-                BASE_DIR, 'frontend/build/static'
-            ),
+            os.path.join(BASE_DIR, 'frontend/build/static'),
         ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.template.context_processors.auth',
-                'django.template.context_processors.messages',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
@@ -102,31 +95,18 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': (
-            'django.contrib.auth.password_validation.'
-            'UserAttributeSimilarityValidator'
-        ),
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
     },
     {
-        'NAME': (
-            'django.contrib.auth.password_validation.'
-            'MinimumLengthValidator'
-        ),
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': (
-            'django.contrib.auth.password_validation.'
-            'CommonPasswordValidator'
-        ),
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': (
-            'django.contrib.auth.password_validation.'
-            'NumericPasswordValidator'
-        ),
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
@@ -157,7 +137,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'frontend/static'),
     os.path.join(BASE_DIR, 'frontend/build'),
-    os.path.join(
-        BASE_DIR, 'frontend/build/static'
-    ),
+    os.path.join(BASE_DIR, 'frontend/build/static'),
 ]
