@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.http import JsonResponse
 from django.contrib.auth import login, logout, authenticate
 import logging
@@ -13,6 +12,8 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 logger = logging.getLogger(__name__)
 
 # Create a `login_request` view to handle sign in request
+
+
 @csrf_exempt
 def login_user(request):
     data = json.loads(request.body)
@@ -25,16 +26,18 @@ def login_user(request):
         data = {"userName": username, "status": "Authenticated"}
     return JsonResponse(data)
 
-
 # Create a `logout_request` view to handle sign out request
+
+
 @csrf_exempt
 def logout_request(request):
     logout(request)
     data = {"userName": ""}
     return JsonResponse(data)
 
-
 # Create a `registration` view to handle sign up request
+
+
 @csrf_exempt
 def registration(request):
     data = json.loads(request.body)
@@ -72,7 +75,8 @@ def get_cars(request):
     if count == 0:
         initiate()
     car_models = CarModel.objects.select_related('car_make')
-    cars = [{"CarModel": car_model.name, "CarMake": car_model.car_make.name} for car_model in car_models]
+    cars = [{"CarModel": car_model.name,
+             "CarMake": car_model.car_make.name} for car_model in car_models]
     return JsonResponse({"CarModels": cars})
 
 
