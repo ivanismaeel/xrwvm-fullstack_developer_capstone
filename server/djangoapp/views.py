@@ -12,8 +12,6 @@ from .restapis import get_request, analyze_review_sentiments, post_review
 logger = logging.getLogger(__name__)
 
 # Create a `login_request` view to handle sign in request
-
-
 @csrf_exempt
 def login_user(request):
     data = json.loads(request.body)
@@ -27,8 +25,6 @@ def login_user(request):
     return JsonResponse(data)
 
 # Create a `logout_request` view to handle sign out request
-
-
 @csrf_exempt
 def logout_request(request):
     logout(request)
@@ -36,8 +32,6 @@ def logout_request(request):
     return JsonResponse(data)
 
 # Create a `registration` view to handle sign up request
-
-
 @csrf_exempt
 def registration(request):
     data = json.loads(request.body)
@@ -68,7 +62,6 @@ def registration(request):
         data = {"userName": username, "error": "Already Registered"}
         return JsonResponse(data)
 
-
 @csrf_exempt
 def get_cars(request):
     count = CarMake.objects.filter().count()
@@ -79,13 +72,11 @@ def get_cars(request):
              "CarMake": car_model.car_make.name} for car_model in car_models]
     return JsonResponse({"CarModels": cars})
 
-
 @csrf_exempt
 def get_dealerships(request, state="All"):
     endpoint = "/fetchDealers" if state == "All" else f"/fetchDealers/{state}"
     dealerships = get_request(endpoint)
     return JsonResponse({"status": 200, "dealers": dealerships})
-
 
 @csrf_exempt
 def get_dealer_reviews(request, dealer_id):
@@ -99,7 +90,6 @@ def get_dealer_reviews(request, dealer_id):
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
-
 @csrf_exempt
 def get_dealer_details(request, dealer_id):
     if dealer_id:
@@ -109,13 +99,12 @@ def get_dealer_details(request, dealer_id):
     else:
         return JsonResponse({"status": 400, "message": "Bad Request"})
 
-
 @csrf_exempt
 def add_review(request):
     if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
-            response = post_review(data)
+            post_review(data)
             return JsonResponse({"status": 200})
         except Exception as e:
             logger.error(f"Error in posting review: {e}")
